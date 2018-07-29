@@ -1,2 +1,2 @@
 # unoffical_rotten_tomatoes_api
-Make GET requests to get Rotten Tomatoes scores for movies
+Make GET requests to return Rotten Tomatoes scores for movies in JSON format
