@@ -16,7 +16,7 @@ app.use(limiter);
 function format(string) {
   let array = string.split(" ");
   let newArray = []
-  for (var i = 0; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     newArray.push(array[i][0].toUpperCase() + array[i].substring(1))
   }
   let output = newArray.join(" ");
