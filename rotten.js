@@ -16,12 +16,16 @@ app.use(limiter);
 function format(string) {
   let array = string.split(" ");
   let newArray = []
-  for (let i = 0; i < array.length; i++) {
+  for (var i = 0; i < array.length; i++) {
     newArray.push(array[i][0].toUpperCase() + array[i].substring(1))
   }
   let output = newArray.join(" ");
   return output;
 }
+
+app.get("/", (req, resp) => {
+  resp.send("working")
+})
 
 app.get("/movie/:movie", (req, resp) => {
   let movieTitle = req.params.movie.replace(/ /g,"_");;
@@ -31,17 +35,13 @@ app.get("/movie/:movie", (req, resp) => {
       let $ = cheerio.load(html);
       let results = [];
       let year;
-      $(".meter-value").each(function(index, element) {
+      $(".mop-ratings-wrap__percentage").each(function(index, element) {
         results.push($(this).text().trim());
-      })
-      $(".year").each(function(index, element) {
-        year = $(this).text().trim().replace("(", "").replace(")", "");
       })
       let respObject = {
         title: format(decodeURIComponent(req.params.movie)),
-        year: year,
         critic_score: results[0],
-        audience_score: results[2],
+        audience_score: results[results.length - 1],
         status: 200
       }
       resp.send(respObject)
@@ -54,6 +54,6 @@ app.get("/movie/:movie", (req, resp) => {
   })
 })
 
-app.listen(3000, () => {
+app.listen(3999, () => {
   console.log("started...")
 })
